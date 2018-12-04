@@ -1,5 +1,5 @@
 *.zip
 .ipynb_checkpoints
-image_train
-txt_train
-image_output
+image_train/*
+txt_train/*
+image_output/*
