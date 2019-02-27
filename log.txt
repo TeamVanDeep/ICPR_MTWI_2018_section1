@@ -1,0 +1,177 @@
+C:\Users\dswxl\Anaconda3\envs\keras\python.exe "C:/Users/dswxl/Desktop/ICPR_MTWI_2018 _section1/src/model.py"
+Using TensorFlow backend.
+2019-02-26 09:35:04.397401: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
+2019-02-26 09:35:04.605297: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: GeForce GTX 1060 major: 6 minor: 1 memoryClockRate(GHz): 1.733
+pciBusID: 0000:01:00.0
+totalMemory: 6.00GiB freeMemory: 4.97GiB
+2019-02-26 09:35:04.605689: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2019-02-26 09:35:05.079814: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-02-26 09:35:05.080035: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2019-02-26 09:35:05.080156: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2019-02-26 09:35:05.080400: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 1843 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1060, pci bus id: 0000:01:00.0, compute capability: 6.1)
+Tensor("input_length:0", shape=(?, 1), dtype=int64) Tensor("label_length:0", shape=(?, 1), dtype=int64)
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_1 (InputLayer)            (None, 32, 128, 1)   0                                            
+__________________________________________________________________________________________________
+conv2d_1 (Conv2D)               (None, 32, 128, 64)  640         input_1[0][0]                    
+__________________________________________________________________________________________________
+max_pooling2d_1 (MaxPooling2D)  (None, 16, 64, 64)   0           conv2d_1[0][0]                   
+__________________________________________________________________________________________________
+conv2d_2 (Conv2D)               (None, 16, 64, 128)  73856       max_pooling2d_1[0][0]            
+__________________________________________________________________________________________________
+max_pooling2d_2 (MaxPooling2D)  (None, 8, 32, 128)   0           conv2d_2[0][0]                   
+__________________________________________________________________________________________________
+conv2d_3 (Conv2D)               (None, 8, 32, 256)   295168      max_pooling2d_2[0][0]            
+__________________________________________________________________________________________________
+conv2d_4 (Conv2D)               (None, 8, 32, 256)   590080      conv2d_3[0][0]                   
+__________________________________________________________________________________________________
+max_pooling2d_3 (MaxPooling2D)  (None, 4, 16, 256)   0           conv2d_4[0][0]                   
+__________________________________________________________________________________________________
+conv2d_5 (Conv2D)               (None, 4, 16, 512)   1180160     max_pooling2d_3[0][0]            
+__________________________________________________________________________________________________
+batch_normalization_1 (BatchNor (None, 4, 16, 512)   2048        conv2d_5[0][0]                   
+__________________________________________________________________________________________________
+conv2d_6 (Conv2D)               (None, 4, 16, 512)   2359808     batch_normalization_1[0][0]      
+__________________________________________________________________________________________________
+batch_normalization_2 (BatchNor (None, 4, 16, 512)   2048        conv2d_6[0][0]                   
+__________________________________________________________________________________________________
+max_pooling2d_4 (MaxPooling2D)  (None, 2, 8, 512)    0           batch_normalization_2[0][0]      
+__________________________________________________________________________________________________
+conv2d_7 (Conv2D)               (None, 1, 7, 512)    1049088     max_pooling2d_4[0][0]            
+__________________________________________________________________________________________________
+permute_1 (Permute)             (None, 7, 1, 512)    0           conv2d_7[0][0]                   
+__________________________________________________________________________________________________
+time_distributed_1 (TimeDistrib (None, 7, 512)       0           permute_1[0][0]                  
+__________________________________________________________________________________________________
+bidirectional_1 (Bidirectional) (None, 7, 512)       1181184     time_distributed_1[0][0]         
+__________________________________________________________________________________________________
+bidirectional_2 (Bidirectional) (None, 7, 512)       1181184     bidirectional_1[0][0]            
+__________________________________________________________________________________________________
+dense_1 (Dense)                 (None, 7, 5530)      2836890     bidirectional_2[0][0]            
+__________________________________________________________________________________________________
+the_labels (InputLayer)         (None, None)         0                                            
+__________________________________________________________________________________________________
+input_length (InputLayer)       (None, 1)            0                                            
+__________________________________________________________________________________________________
+label_length (InputLayer)       (None, 1)            0                                            
+__________________________________________________________________________________________________
+ctc (Lambda)                    (None, 1, None)      0           dense_1[0][0]                    
+                                                                 the_labels[0][0]                 
+                                                                 input_length[0][0]               
+                                                                 label_length[0][0]               
+==================================================================================================
+Total params: 10,752,154
+Trainable params: 10,750,106
+Non-trainable params: 2,048
+__________________________________________________________________________________________________
+Epoch 1/1
+2019-02-26 09:35:17.146761: W tensorflow/core/common_runtime/bfc_allocator.cc:211] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.10GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2019-02-26 09:35:17.193951: W tensorflow/core/common_runtime/bfc_allocator.cc:211] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.15GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+Traceback (most recent call last):
+  File "C:/Users/dswxl/Desktop/ICPR_MTWI_2018 _section1/src/model.py", line 196, in <module>
+    train()
+  File "C:/Users/dswxl/Desktop/ICPR_MTWI_2018 _section1/src/model.py", line 170, in train
+    model.fit(train_data[0], train_data[1])
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\engine\training.py", line 1039, in fit
+    validation_steps=validation_steps)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\engine\training_arrays.py", line 199, in fit_loop
+    outs = f(ins_batch)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\backend\tensorflow_backend.py", line 2715, in __call__
+    return self._call(inputs)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\backend\tensorflow_backend.py", line 2675, in _call
+    fetched = self._callable_fn(*array_vals)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\tensorflow\python\client\session.py", line 1439, in __call__
+    run_metadata_ptr)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\tensorflow\python\framework\errors_impl.py", line 528, in __exit__
+    c_api.TF_GetCode(self.status.status))
+tensorflow.python.framework.errors_impl.InvalidArgumentError: sequence_length(0) <= 7
+	 [[{{node ctc/CTCLoss}} = CTCLoss[_class=["loc:@training/Adadelta/gradients/ctc/CTCLoss_grad/mul"], ctc_merge_repeated=true, ignore_longer_outputs_than_inputs=false, preprocess_collapse_repeated=false, _device="/job:localhost/replica:0/task:0/device:CPU:0"](ctc/Log/_351, ctc/ToInt64/_353, ctc/ToInt32_2/_355, ctc/ToInt32_1/_357)]]
+
+Process finished with exit code 1
+
+
+
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+the_input (InputLayer)          (None, 32, 128, 1)   0                                            
+__________________________________________________________________________________________________
+conv1 (Conv2D)                  (None, 32, 128, 64)  640         the_input[0][0]                  
+__________________________________________________________________________________________________
+pool1 (MaxPooling2D)            (None, 16, 64, 64)   0           conv1[0][0]                      
+__________________________________________________________________________________________________
+conv2 (Conv2D)                  (None, 16, 64, 128)  73856       pool1[0][0]                      
+__________________________________________________________________________________________________
+pool2 (MaxPooling2D)            (None, 8, 32, 128)   0           conv2[0][0]                      
+__________________________________________________________________________________________________
+conv3 (Conv2D)                  (None, 8, 32, 256)   295168      pool2[0][0]                      
+__________________________________________________________________________________________________
+conv4 (Conv2D)                  (None, 8, 32, 256)   590080      conv3[0][0]                      
+__________________________________________________________________________________________________
+pool3 (MaxPooling2D)            (None, 4, 31, 256)   0           conv4[0][0]                      
+__________________________________________________________________________________________________
+conv5 (Conv2D)                  (None, 4, 31, 512)   1180160     pool3[0][0]                      
+__________________________________________________________________________________________________
+conv6 (Conv2D)                  (None, 4, 31, 512)   2359808     conv5[0][0]                      
+__________________________________________________________________________________________________
+pool4 (MaxPooling2D)            (None, 2, 30, 512)   0           conv6[0][0]                      
+__________________________________________________________________________________________________
+conv7 (Conv2D)                  (None, 1, 29, 512)   1049088     pool4[0][0]                      
+__________________________________________________________________________________________________
+permute (Permute)               (None, 29, 1, 512)   0           conv7[0][0]                      
+__________________________________________________________________________________________________
+timedistrib (TimeDistributed)   (None, 29, 512)      0           permute[0][0]                    
+__________________________________________________________________________________________________
+blstm1 (Bidirectional)          (None, 29, 512)      1181184     timedistrib[0][0]                
+__________________________________________________________________________________________________
+blstm1_out (Dense)              (None, 29, 256)      131328      blstm1[0][0]                     
+__________________________________________________________________________________________________
+blstm2 (Bidirectional)          (None, 29, 512)      787968      blstm1_out[0][0]                 
+__________________________________________________________________________________________________
+blstm2_out (Dense)              (None, 29, 5530)     2836890     blstm2[0][0]                     
+__________________________________________________________________________________________________
+the_labels (InputLayer)         (None, None)         0                                            
+__________________________________________________________________________________________________
+input_length (InputLayer)       (None, 1)            0                                            
+__________________________________________________________________________________________________
+label_length (InputLayer)       (None, 1)            0                                            
+__________________________________________________________________________________________________
+ctc (Lambda)                    (None, 1)            0           blstm2_out[0][0]                 
+                                                                 the_labels[0][0]                 
+                                                                 input_length[0][0]               
+                                                                 label_length[0][0]               
+==================================================================================================
+Total params: 10,486,170
+Trainable params: 10,486,170
+Non-trainable params: 0
+__________________________________________________________________________________________________
+Epoch 1/1
+2019-02-26 09:37:08.151161: W tensorflow/core/common_runtime/bfc_allocator.cc:211] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.10GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+2019-02-26 09:37:08.222062: W tensorflow/core/common_runtime/bfc_allocator.cc:211] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.15GiB. The caller indicates that this is not a failure, but may mean that there could be performance gains if more memory were available.
+Traceback (most recent call last):
+  File "C:/Users/dswxl/Desktop/ICPR_MTWI_2018 _section1/src/model.py", line 196, in <module>
+    train()
+  File "C:/Users/dswxl/Desktop/ICPR_MTWI_2018 _section1/src/model.py", line 170, in train
+    model.fit(train_data[0], train_data[1])
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\engine\training.py", line 1039, in fit
+    validation_steps=validation_steps)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\engine\training_arrays.py", line 199, in fit_loop
+    outs = f(ins_batch)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\backend\tensorflow_backend.py", line 2715, in __call__
+    return self._call(inputs)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\keras\backend\tensorflow_backend.py", line 2675, in _call
+    fetched = self._callable_fn(*array_vals)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\tensorflow\python\client\session.py", line 1439, in __call__
+    run_metadata_ptr)
+  File "C:\Users\dswxl\Anaconda3\envs\keras\lib\site-packages\tensorflow\python\framework\errors_impl.py", line 528, in __exit__
+    c_api.TF_GetCode(self.status.status))
+tensorflow.python.framework.errors_impl.InvalidArgumentError: sequence_length(0) <= 29
+	 [[{{node ctc/CTCLoss}} = CTCLoss[_class=["loc:@training/SGD/gradients/ctc/CTCLoss_grad/mul"], ctc_merge_repeated=true, ignore_longer_outputs_than_inputs=false, preprocess_collapse_repeated=false, _device="/job:localhost/replica:0/task:0/device:CPU:0"](ctc/Log/_251, ctc/ToInt64/_253, ctc/ToInt32_2/_255, ctc/ToInt32_1/_257)]]
+
+Process finished with exit code 1
+
+
+
